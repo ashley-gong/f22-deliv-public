@@ -69,6 +69,15 @@ export default function EntryModal({ entry, type, user }) {
   };
 
   // TODO: Add Edit Mutation Handler
+
+  const handleChange = (e) => {
+    if (update === true) {
+      setName(name);
+    } else {
+      setName(e.target.value);
+    }
+  };
+
   const handleUpdate = () => {
     setUpdate(true);
 
@@ -132,7 +141,7 @@ export default function EntryModal({ entry, type, user }) {
             fullWidth
             variant="standard"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={handleChange}
           />
           <TextField
             margin="normal"

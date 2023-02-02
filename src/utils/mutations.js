@@ -29,9 +29,9 @@ export async function updateEntry(entry) {
   // TODO: Create Mutation to Edit Entry
 
   // Reference to entry
-  const entryToUpdate = doc(db, "entries", entry);
+  const entryToUpdate = doc(db, "entries", entry.id);
   await updateDoc(entryToUpdate, {
-    name: "hi",
+    name: entry.name,
     link: entry.link,
     description: entry.description,
     category: entry.category,
