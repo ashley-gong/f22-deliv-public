@@ -24,12 +24,12 @@ export async function addEntry(entry) {
   });
 }
 
-// entry should refer to id of user?
-export async function updateEntry(entry) {
+// Added ID argument to use entry's generated ID for  updateDoc
+export async function updateEntry(id, entry) {
   // TODO: Create Mutation to Edit Entry
 
   // Reference to entry
-  const entryToUpdate = doc(db, "entries", entry.id);
+  const entryToUpdate = doc(db, "entries", id);
   await updateDoc(entryToUpdate, {
     name: entry.name,
     link: entry.link,

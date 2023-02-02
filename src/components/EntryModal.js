@@ -35,7 +35,7 @@ export default function EntryModal({ entry, type, user }) {
   const [link, setLink] = useState(entry.link);
   const [description, setDescription] = useState(entry.description);
   const [category, setCategory] = React.useState(entry.category);
-  const [update, setUpdate] = useState(false);
+  const [updating, setUpdating] = useState(false); // where does this state come in?
 
   // Modal visibility handlers
 
@@ -48,7 +48,7 @@ export default function EntryModal({ entry, type, user }) {
   };
 
   const handleClose = () => {
-    setUpdate(false);
+    setUpdating(false);
     setOpen(false);
   };
 
@@ -70,16 +70,8 @@ export default function EntryModal({ entry, type, user }) {
 
   // TODO: Add Edit Mutation Handler
 
-  const handleChange = (e) => {
-    if (update === true) {
-      setName(name);
-    } else {
-      setName(e.target.value);
-    }
-  };
-
   const handleUpdate = () => {
-    setUpdate(true);
+    setUpdating(true);
 
     const updatedEntry = {
       name: name,
@@ -88,7 +80,7 @@ export default function EntryModal({ entry, type, user }) {
       category: category,
     };
 
-    updateEntry(updatedEntry).catch(console.error);
+    updateEntry(entry.id, updatedEntry).catch(console.error);
     handleClose();
   };
 
@@ -112,11 +104,11 @@ export default function EntryModal({ entry, type, user }) {
   const actionButtons =
     type === "edit" ? (
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button>Delete</Button>
+        <Button sx={{ color: "red" }}>Delete</Button>
         <Button variant="contained" onClick={handleUpdate}>
           Update
         </Button>
+        <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>
     ) : type === "add" ? (
       <DialogActions>
@@ -130,7 +122,7 @@ export default function EntryModal({ entry, type, user }) {
   return (
     <div>
       {openButton}
-      <Dialog open={open} update={update} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{type === "edit" ? name : "Add Entry"}</DialogTitle>
         <DialogContent>
           {/* TODO: Feel free to change the properties of these components to implement editing functionality. The InputProps props class for these MUI components allows you to change their traditional CSS properties. */}
@@ -141,7 +133,7 @@ export default function EntryModal({ entry, type, user }) {
             fullWidth
             variant="standard"
             value={name}
-            onChange={handleChange}
+            onChange={(event) => setName(event.target.value)}
           />
           <TextField
             margin="normal"
