@@ -34,7 +34,6 @@ export default function EntryModal({ entry, type, user }) {
   const [link, setLink] = useState(entry.link);
   const [description, setDescription] = useState(entry.description);
   const [category, setCategory] = useState(entry.category);
-  const [imageUrl, setImageUrl] = useState(entry.imageUrl);
   const [updating, setUpdating] = useState(false); // When reopening modal, initially read-only
   const [updateButton, setUpdateButton] = useState("Update");
 

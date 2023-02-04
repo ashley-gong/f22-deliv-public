@@ -4,8 +4,9 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { useState, useEffect } from "react";
+import ImageDisplay from "./ImageDisplay";
 
-export default function ImageUpload({ type }) {
+export default function ImageUpload({ type, entry }) {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -14,6 +15,12 @@ export default function ImageUpload({ type }) {
       setImageUrl(URL.createObjectURL(image));
     }
   }, [image]);
+
+  const handleImage = (e) => {
+    setImage(e.target.files[0]);
+    console.log({ image });
+    console.log({ imageUrl });
+  };
 
   const uploadButton =
     type === "button" ? (
@@ -26,8 +33,7 @@ export default function ImageUpload({ type }) {
             multiple
             type="file"
             onChange={(e) => {
-              setImage(e.target.files[0]);
-              console.log({ image });
+              handleImage(e);
             }}
           />
         </Button>
@@ -53,11 +59,7 @@ export default function ImageUpload({ type }) {
       </div>
     ) : type === "show" ? (
       <div>
-        {imageUrl !== null ? (
-          // <Box mt={2}>
-          <img src={imageUrl} alt={image.name} height="250px" />
-        ) : // </Box>
-        null}
+        <ImageDisplay url={imageUrl} />
       </div>
     ) : null;
 
