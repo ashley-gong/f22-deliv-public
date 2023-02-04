@@ -35,6 +35,7 @@ export default function EntryModal({ entry, type, user }) {
   const [description, setDescription] = useState(entry.description);
   const [category, setCategory] = useState(entry.category);
   const [updating, setUpdating] = useState(false); // When reopening modal, initially read-only
+  const [updateButton, setUpdateButton] = useState("Update");
   const [deleting, setDeleting] = useState(false);
 
   // Modal visibility handlers
@@ -95,35 +96,24 @@ export default function EntryModal({ entry, type, user }) {
         <OpenInNewIcon />
       </IconButton>
     ) : type === "add" ? (
-      <Grid container justify="flex-end">
-        <Button variant="contained" onClick={handleClickOpen}>
-          Add entry
-        </Button>
-        {/* <FormControl sx={{ "margin-left": 20, width: 230 }}>
-          <InputLabel id="demo-simple-select-label">Sort</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={sort}
-            label="Sort"
-            onChange={(event) => {
-              setSort(event.target.value);
-              console.log(event.target.value);
-              handleSort(event.target.value);
-            }}
-          >
-            {sorting.map((sort) => (
-              <MenuItem value={sort.id}>{sort.name}</MenuItem>
-            ))}
-          </Select>
-        </FormControl> */}
-      </Grid>
+      <Button variant="contained" onClick={handleClickOpen}>
+        Add entry
+      </Button>
     ) : null;
 
   const actionButtons =
     type === "edit" ? (
       <DialogActions>
-        <Button onClick={() => setUpdating(!updating)}>Update</Button>
+        <Button
+          onClick={() => {
+            setUpdating(!updating);
+            updateButton === "Update"
+              ? setUpdateButton("Back")
+              : setUpdateButton("Update");
+          }}
+        >
+          {updateButton}
+        </Button>
         <Button variant="contained" onClick={handleUpdate}>
           Save
         </Button>
