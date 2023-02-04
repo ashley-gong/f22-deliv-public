@@ -70,8 +70,6 @@ export default function EntryModal({ entry, type, user }) {
   // TODO: Add Edit Mutation Handler
 
   const handleUpdate = () => {
-    setUpdating(true);
-
     const updatedEntry = {
       name: name,
       link: link,
@@ -107,11 +105,9 @@ export default function EntryModal({ entry, type, user }) {
   const actionButtons =
     type === "edit" ? (
       <DialogActions>
-        <Button sx={{ color: "red" }} onClick={handleDelete}>
-          Delete
-        </Button>
+        <Button onClick={() => setUpdating(!updating)}>Update</Button>
         <Button variant="contained" onClick={handleUpdate}>
-          Update
+          Save
         </Button>
         <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>
@@ -128,6 +124,13 @@ export default function EntryModal({ entry, type, user }) {
     <div>
       {openButton}
       <Dialog open={open} onClose={handleClose}>
+        <DialogActions>
+          {type === "edit" ? (
+            <Button sx={{ color: "red" }} onClick={handleDelete}>
+              Delete
+            </Button>
+          ) : null}
+        </DialogActions>
         <DialogTitle>{type === "edit" ? name : "Add Entry"}</DialogTitle>
         <DialogContent>
           {/* TODO: Feel free to change the properties of these components to implement editing functionality. The InputProps props class for these MUI components allows you to change their traditional CSS properties. */}
@@ -138,6 +141,9 @@ export default function EntryModal({ entry, type, user }) {
             fullWidth
             variant="standard"
             value={name}
+            InputProps={{
+              readOnly: type === "edit" ? !updating : false,
+            }}
             onChange={(event) => setName(event.target.value)}
           />
           <TextField
@@ -148,6 +154,9 @@ export default function EntryModal({ entry, type, user }) {
             fullWidth
             variant="standard"
             value={link}
+            InputProps={{
+              readOnly: type === "edit" ? !updating : false,
+            }}
             onChange={(event) => setLink(event.target.value)}
           />
           <TextField
@@ -159,6 +168,9 @@ export default function EntryModal({ entry, type, user }) {
             multiline
             maxRows={8}
             value={description}
+            InputProps={{
+              readOnly: type === "edit" ? !updating : false,
+            }}
             onChange={(event) => setDescription(event.target.value)}
           />
 
@@ -168,6 +180,9 @@ export default function EntryModal({ entry, type, user }) {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={category}
+              InputProps={{
+                readOnly: type === "edit" ? !updating : false,
+              }}
               label="Category"
               onChange={(event) => setCategory(event.target.value)}
             >
