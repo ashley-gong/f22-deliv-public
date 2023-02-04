@@ -2,6 +2,7 @@
 // highly highly based on categories.js
 
 export const sorting = [
+  { id: "null", name: "Sort by" },
   { id: "name", name: "Sort by Name (A-Z)" },
   { id: "link", name: "Sort by Link (A-Z)" },
   { id: "user", name: "Sort by User (A-Z)" },

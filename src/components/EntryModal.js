@@ -35,7 +35,6 @@ export default function EntryModal({ entry, type, user }) {
   const [category, setCategory] = useState(entry.category);
   const [updating, setUpdating] = useState(false); // When reopening modal, initially read-only
   const [updateButton, setUpdateButton] = useState("Update");
-  const [deleting, setDeleting] = useState(false);
 
   // Modal visibility handlers
 
@@ -104,6 +103,8 @@ export default function EntryModal({ entry, type, user }) {
   const actionButtons =
     type === "edit" ? (
       <DialogActions>
+        {/* Deletion Handler */}
+        <DeleteModal entry={entry} />
         <Button
           onClick={() => {
             setUpdating(!updating);
@@ -132,13 +133,6 @@ export default function EntryModal({ entry, type, user }) {
     <div>
       {openButton}
       <Dialog open={open} onClose={handleClose}>
-        <DialogActions>
-          {type === "edit" ? (
-            <Button sx={{ color: "red" }} onClick={() => setDeleting(true)}>
-              Delete
-            </Button>
-          ) : null}
-        </DialogActions>
         <DialogTitle>{type === "edit" ? name : "Add Entry"}</DialogTitle>
         <DialogContent>
           {/* Edited InputProps for updating state */}
@@ -202,8 +196,6 @@ export default function EntryModal({ entry, type, user }) {
         </DialogContent>
         {actionButtons}
       </Dialog>
-      {/* Deletion Handler */}
-      <DeleteModal opening={deleting} entry={entry} />
     </div>
   );
 }

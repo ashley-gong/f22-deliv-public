@@ -32,8 +32,7 @@ export default function EntryTable({ entries }) {
           label="Sort"
           onChange={(event) => {
             setSort(event.target.value);
-            console.log(sort);
-            // handleSort(event.target.value);
+            // console.log(sort);
           }}
         >
           {sorting.map((sort) => (
