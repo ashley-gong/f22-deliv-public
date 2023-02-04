@@ -13,7 +13,8 @@ import TextField from "@mui/material/TextField";
 import * as React from "react";
 import { useState } from "react";
 import { categories } from "../utils/categories";
-import { addEntry, updateEntry, deleteEntry } from "../utils/mutations";
+import { addEntry, updateEntry } from "../utils/mutations";
+import DeleteModal from "./DeleteModal";
 
 // Modal component for individual entries.
 
@@ -27,14 +28,13 @@ user: User making query (The current logged in user). */
 export default function EntryModal({ entry, type, user }) {
   // State variables for modal status
 
-  // TODO: For editing, you may have to add and manage another state variable to check if the entry is being edited.
-
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(entry.name);
   const [link, setLink] = useState(entry.link);
   const [description, setDescription] = useState(entry.description);
   const [category, setCategory] = React.useState(entry.category);
-  const [updating, setUpdating] = useState(false); // where does this state come in?
+  const [updating, setUpdating] = useState(false); // When reopening modal, initially read-only
+  const [deleting, setDeleting] = useState(false);
 
   // Modal visibility handlers
 
@@ -67,7 +67,7 @@ export default function EntryModal({ entry, type, user }) {
     handleClose();
   };
 
-  // TODO: Add Edit Mutation Handler
+  // Add Edit Mutation Handler
 
   const handleUpdate = () => {
     const updatedEntry = {
@@ -81,11 +81,8 @@ export default function EntryModal({ entry, type, user }) {
     handleClose();
   };
 
-  // TODO: Add Delete Mutation Handler
-  const handleDelete = () => {
-    deleteEntry(entry.id, entry).catch(console.error);
-    handleClose();
-  };
+  // Delete Mutation Handler is handled in DeleteModal.js - one extra feature is
+  // my confirmation popup.
 
   // Button handlers for modal opening and inside-modal actions.
   // These buttons are displayed conditionally based on if adding or editing/opening.
@@ -126,14 +123,14 @@ export default function EntryModal({ entry, type, user }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogActions>
           {type === "edit" ? (
-            <Button sx={{ color: "red" }} onClick={handleDelete}>
+            <Button sx={{ color: "red" }} onClick={() => setDeleting(true)}>
               Delete
             </Button>
           ) : null}
         </DialogActions>
         <DialogTitle>{type === "edit" ? name : "Add Entry"}</DialogTitle>
         <DialogContent>
-          {/* TODO: Feel free to change the properties of these components to implement editing functionality. The InputProps props class for these MUI components allows you to change their traditional CSS properties. */}
+          {/* Edited InputProps for updating state */}
           <TextField
             margin="normal"
             id="name"
@@ -194,6 +191,8 @@ export default function EntryModal({ entry, type, user }) {
         </DialogContent>
         {actionButtons}
       </Dialog>
+      {/* Deletion Handler */}
+      <DeleteModal opening={deleting} entry={entry} />
     </div>
   );
 }
