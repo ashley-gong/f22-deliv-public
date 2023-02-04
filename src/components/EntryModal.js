@@ -5,7 +5,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -50,6 +49,7 @@ export default function EntryModal({ entry, type, user }) {
 
   const handleClose = () => {
     setUpdating(false);
+    setUpdateButton("Update");
     setOpen(false);
   };
 
@@ -107,9 +107,9 @@ export default function EntryModal({ entry, type, user }) {
         <Button
           onClick={() => {
             setUpdating(!updating);
-            updateButton === "Edit"
+            updateButton === "Update"
               ? setUpdateButton("Back")
-              : setUpdateButton("Edit");
+              : setUpdateButton("Update");
           }}
         >
           {updateButton}
