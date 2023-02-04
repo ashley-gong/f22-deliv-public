@@ -15,6 +15,7 @@ import { useState } from "react";
 import { categories } from "../utils/categories";
 import { addEntry, updateEntry } from "../utils/mutations";
 import DeleteModal from "./DeleteModal";
+import ImageUpload from "./ImageUpload";
 
 // Modal component for individual entries.
 
@@ -33,6 +34,7 @@ export default function EntryModal({ entry, type, user }) {
   const [link, setLink] = useState(entry.link);
   const [description, setDescription] = useState(entry.description);
   const [category, setCategory] = useState(entry.category);
+  const [imageUrl, setImageUrl] = useState(entry.imageUrl);
   const [updating, setUpdating] = useState(false); // When reopening modal, initially read-only
   const [updateButton, setUpdateButton] = useState("Update");
 
@@ -100,11 +102,9 @@ export default function EntryModal({ entry, type, user }) {
       </Button>
     ) : null;
 
-  const actionButtons =
+  const topRightButtons =
     type === "edit" ? (
       <DialogActions>
-        {/* Deletion Handler */}
-        <DeleteModal entry={entry} />
         <Button
           onClick={() => {
             setUpdating(!updating);
@@ -115,10 +115,18 @@ export default function EntryModal({ entry, type, user }) {
         >
           {updateButton}
         </Button>
+        {/* Deletion Handler */}
+        <DeleteModal entry={entry} />
+      </DialogActions>
+    ) : null;
+
+  const actionButtons =
+    type === "edit" ? (
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
         <Button variant="contained" onClick={handleUpdate}>
           Save
         </Button>
-        <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>
     ) : type === "add" ? (
       <DialogActions>
@@ -133,8 +141,11 @@ export default function EntryModal({ entry, type, user }) {
     <div>
       {openButton}
       <Dialog open={open} onClose={handleClose}>
+        {topRightButtons}
         <DialogTitle>{type === "edit" ? name : "Add Entry"}</DialogTitle>
         <DialogContent>
+          {/* display image if editing */}
+          <ImageUpload type="show" />
           {/* Edited InputProps for updating state */}
           <TextField
             margin="normal"
@@ -175,7 +186,6 @@ export default function EntryModal({ entry, type, user }) {
             }}
             onChange={(event) => setDescription(event.target.value)}
           />
-
           <FormControl fullWidth sx={{ "margin-top": 20 }}>
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
             <Select
@@ -193,6 +203,7 @@ export default function EntryModal({ entry, type, user }) {
               ))}
             </Select>
           </FormControl>
+          <ImageUpload type="button" entry={entry} />
         </DialogContent>
         {actionButtons}
       </Dialog>

@@ -4,8 +4,6 @@ import {
   updateDoc,
   deleteDoc,
   collection,
-  query,
-  orderBy,
 } from "firebase/firestore";
 import { db } from "./firebase";
 
@@ -17,6 +15,7 @@ export const emptyEntry = {
   description: "",
   user: "",
   category: 0,
+  imageUrl: "",
 };
 
 export async function addEntry(entry) {
@@ -26,6 +25,7 @@ export async function addEntry(entry) {
     description: entry.description,
     user: entry.user,
     category: entry.category,
+    imageUrl: "",
     // The ID of the current user is logged with the new entry for database user-access functionality.
     // You should not remove this userid property, otherwise your logged entries will not display.
     userid: entry.userid,
@@ -43,6 +43,7 @@ export async function updateEntry(id, entry) {
     link: entry.link,
     description: entry.description,
     category: entry.category,
+    imageUrl: entry.imageUrl,
   });
 }
 
@@ -51,9 +52,4 @@ export async function deleteEntry(id) {
 
   const entryToDelete = doc(db, "entries", id);
   await deleteDoc(entryToDelete);
-}
-
-// Sorting function - not working bc of snapshot function?????
-export async function sortEntry(id) {
-  query(collection(db, "entries"), orderBy(id));
 }
