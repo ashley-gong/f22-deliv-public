@@ -19,12 +19,7 @@ import { sorting } from "../utils/sort";
 
 export default function EntryTable({ entries }) {
   // Sort handler
-  const [sort, setSort] = useState("name");
-  //   const [sortMethod, setSortMethod] = useState(null);
-
-  //   const handleSort = (method) => {
-  //     setSortMethod((a, b) => (a[method] > b[method] ? 1 : -1));
-  //   };
+  const [sort, setSort] = useState("null");
 
   return (
     <div>
@@ -59,7 +54,11 @@ export default function EntryTable({ entries }) {
           </TableHead>
           <TableBody>
             {entries
-              .sort((a, b) => (a[sort] > b[sort] ? 1 : -1))
+              .sort(
+                { sort } === "null"
+                  ? null
+                  : (a, b) => (a[sort] > b[sort] ? 1 : -1)
+              )
               .map((entry) => (
                 <TableRow
                   key={entry.id}
