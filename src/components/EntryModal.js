@@ -107,9 +107,9 @@ export default function EntryModal({ entry, type, user }) {
         <Button
           onClick={() => {
             setUpdating(!updating);
-            updateButton === "Update"
+            updateButton === "Edit"
               ? setUpdateButton("Back")
-              : setUpdateButton("Update");
+              : setUpdateButton("Edit");
           }}
         >
           {updateButton}
