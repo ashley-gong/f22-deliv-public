@@ -5,6 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -32,7 +33,7 @@ export default function EntryModal({ entry, type, user }) {
   const [name, setName] = useState(entry.name);
   const [link, setLink] = useState(entry.link);
   const [description, setDescription] = useState(entry.description);
-  const [category, setCategory] = React.useState(entry.category);
+  const [category, setCategory] = useState(entry.category);
   const [updating, setUpdating] = useState(false); // When reopening modal, initially read-only
   const [deleting, setDeleting] = useState(false);
 
@@ -94,9 +95,29 @@ export default function EntryModal({ entry, type, user }) {
         <OpenInNewIcon />
       </IconButton>
     ) : type === "add" ? (
-      <Button variant="contained" onClick={handleClickOpen}>
-        Add entry
-      </Button>
+      <Grid container justify="flex-end">
+        <Button variant="contained" onClick={handleClickOpen}>
+          Add entry
+        </Button>
+        {/* <FormControl sx={{ "margin-left": 20, width: 230 }}>
+          <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={sort}
+            label="Sort"
+            onChange={(event) => {
+              setSort(event.target.value);
+              console.log(event.target.value);
+              handleSort(event.target.value);
+            }}
+          >
+            {sorting.map((sort) => (
+              <MenuItem value={sort.id}>{sort.name}</MenuItem>
+            ))}
+          </Select>
+        </FormControl> */}
+      </Grid>
     ) : null;
 
   const actionButtons =

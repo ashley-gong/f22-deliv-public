@@ -4,6 +4,8 @@ import {
   updateDoc,
   deleteDoc,
   collection,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "./firebase";
 
@@ -30,7 +32,7 @@ export async function addEntry(entry) {
   });
 }
 
-// Added ID argument to use entry's generated ID for  updateDoc
+// Added ID argument to use entry's generated ID for updateDoc
 export async function updateEntry(id, entry) {
   // Mutation to Edit Entry
 
@@ -44,9 +46,14 @@ export async function updateEntry(id, entry) {
   });
 }
 
-export async function deleteEntry(id, entry) {
-  // TODO: Create Mutation to Delete Entry
+export async function deleteEntry(id) {
+  // Create Mutation to Delete Entry
 
   const entryToDelete = doc(db, "entries", id);
   await deleteDoc(entryToDelete);
+}
+
+// Sorting function - not working bc of snapshot function?????
+export async function sortEntry(id) {
+  query(collection(db, "entries"), orderBy(id));
 }
