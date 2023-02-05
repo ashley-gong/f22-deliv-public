@@ -9,12 +9,6 @@ export default function ImageUpload() {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
-  // useEffect(() => {
-  //   if (image) {
-  //     setImageUrl(URL.createObjectURL(image));
-  //   }
-  // }, [image]);
-
   const handleImage = (e) => {
     setImage(e.target.files[0]);
     if (image) {
