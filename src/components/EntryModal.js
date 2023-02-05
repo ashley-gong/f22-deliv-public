@@ -144,7 +144,6 @@ export default function EntryModal({ entry, type, user }) {
         <DialogTitle>{type === "edit" ? name : "Add Entry"}</DialogTitle>
         <DialogContent>
           {/* display image if editing */}
-          <ImageUpload type="show" />
           {/* Edited InputProps for updating state */}
           <TextField
             margin="normal"
@@ -202,7 +201,7 @@ export default function EntryModal({ entry, type, user }) {
               ))}
             </Select>
           </FormControl>
-          <ImageUpload type="button" entry={entry} />
+          <ImageUpload />
         </DialogContent>
         {actionButtons}
       </Dialog>
