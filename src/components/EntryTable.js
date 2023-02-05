@@ -56,7 +56,7 @@ export default function EntryTable({ entries }) {
               label="Filter"
               onChange={(event) => {
                 setFilter(event.target.value);
-                console.log(filter);
+                //  console.log(filter);
               }}
             >
               {filtering.map((filter) => (

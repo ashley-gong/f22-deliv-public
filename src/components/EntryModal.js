@@ -143,7 +143,6 @@ export default function EntryModal({ entry, type, user }) {
         {topRightButtons}
         <DialogTitle>{type === "edit" ? name : "Add Entry"}</DialogTitle>
         <DialogContent>
-          {/* display image if editing */}
           {/* Edited InputProps for updating state */}
           <TextField
             margin="normal"
@@ -155,6 +154,9 @@ export default function EntryModal({ entry, type, user }) {
             InputProps={{
               readOnly: type === "edit" ? !updating : false,
             }}
+            error={name === "" ? true : false}
+            helperText={name === "" ? "*Required field" : " "}
+            // variant="filled"
             onChange={(event) => setName(event.target.value)}
           />
           <TextField

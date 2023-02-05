@@ -3,20 +3,17 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ImageUpload() {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
-  const handleImage = (e) => {
-    setImage(e.target.files[0]);
+  useEffect(() => {
     if (image) {
       setImageUrl(URL.createObjectURL(image));
     }
-    console.log({ image });
-    console.log({ imageUrl });
-  };
+  }, [image]);
 
   return (
     <div>
@@ -28,7 +25,7 @@ export default function ImageUpload() {
           multiple
           type="file"
           onChange={(e) => {
-            handleImage(e);
+            setImage(e.target.files[0]);
           }}
         />
       </Button>
