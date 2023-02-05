@@ -64,9 +64,10 @@ export default function EntryModal({ entry, type, user }) {
       category: category,
       userid: user?.uid,
     };
-
-    addEntry(newEntry).catch(console.error);
-    handleClose();
+    if (name !== "") {
+      addEntry(newEntry).catch(console.error);
+      handleClose();
+    }
   };
 
   // Add Edit Mutation Handler
@@ -78,9 +79,10 @@ export default function EntryModal({ entry, type, user }) {
       description: description,
       category: category,
     };
-
-    updateEntry(entry.id, updatedEntry).catch(console.error);
-    handleClose();
+    if (name !== "") {
+      updateEntry(entry.id, updatedEntry).catch(console.error);
+      handleClose();
+    }
   };
 
   // Delete Mutation Handler is handled in DeleteModal.js - one extra feature is
@@ -156,7 +158,6 @@ export default function EntryModal({ entry, type, user }) {
             }}
             error={name === "" ? true : false}
             helperText={name === "" ? "*Required field" : " "}
-            // variant="filled"
             onChange={(event) => setName(event.target.value)}
           />
           <TextField
